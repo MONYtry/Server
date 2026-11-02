@@ -45,18 +45,23 @@ def getUptime():
 
     return SECONDS, MINUTES, HOURS
 
-def getNetwork():
+def getNetwork(old_net, refresh_time):
     NET = psutil.net_io_counters()
-    UPLOAD = NET.bytes_sent / (1024**3)
-    DOWNLOAD = NET.bytes_recv / (1024**3)
+    UPLOAD = (NET.bytes_sent - old_net.bytes_sent) / 1024**2
+    DOWNLOAD = (NET.bytes_recv - old_net.bytes_recv) / 1024**2
+    
+    UPLOAD_SPEED = UPLOAD / refresh_time
+    DOWNLOAD_SPEED = DOWNLOAD / refresh_time
+    
+    return NET, UPLOAD_SPEED, DOWNLOAD_SPEED
 
-    return UPLOAD, DOWNLOAD
+old_net = psutil.net_io_counters()
 
 while True:
 
     os.system("clear")
     
-    UPLOAD, DOWNLOAD = getNetwork()
+    old_net, UPLOAD, DOWNLOAD = getNetwork(old_net, RefreshTime)
 
     SECONDS, MINUTES, HOURS = getUptime()
 
@@ -97,5 +102,5 @@ while True:
 
     time.sleep(RefreshTime)
     
-    RefreshCount = +1
+    RefreshCount += 1
     
