@@ -16,37 +16,58 @@ RED = "\033[91m"
 GREEN = "\033[92m"
 WHITE = "\033[0m"  
 
-while True:
 
-    os.system("clear")
-    UPTIME = time.time() - psutil.boot_time()
-
-    HOURS = int(UPTIME // 3600)
-    MINUTES = int((UPTIME % 3600) // 60)
-    SECONDS = int(UPTIME % 60)
-    
-    NET = psutil.net_io_counters()
-    UPLOAD = NET.bytes_sent / (1024**3)
-    DOWNLOAD = NET.bytes_recv / (1024**3)
-
+def getRAM():
     RAM = psutil.virtual_memory()
-    DISK = psutil.disk_usage("/")
-    
-    # 1024**3 von Bytes auf GB
+
     RAM_TOTAL = RAM.total / (1024**3)
     RAM_USED = RAM.used / (1024**3)
     RAM_FREE = RAM.available / (1024**3)
+    
+    return RAM_FREE, RAM_TOTAL, RAM_USED
 
-    CPU_USAGE = psutil.cpu_percent()
+
+def getDisk():
+    DISK = psutil.disk_usage("/")
 
     DISK_USAGE = DISK.used / (1024**3)
     DISK_FREE = DISK.free / (1024**3)
     DISK_TOTAL = DISK.total / (1024**3)
     DISK_PERCENT = DISK.percent
+    return DISK_FREE, DISK_PERCENT, DISK_TOTAL, DISK_USAGE
 
+def getUptime():
+    UPTIME = time.time() - psutil.boot_time()
 
-    if RAM_FREE < 1:
-        print(f"{RED}WARNING low FREE-RAM")
+    HOURS = int(UPTIME // 3600)
+    MINUTES = int((UPTIME % 3600) // 60)
+    SECONDS = int(UPTIME % 60)
+
+    return SECONDS, MINUTES, HOURS
+
+def getNetwork():
+    NET = psutil.net_io_counters()
+    UPLOAD = NET.bytes_sent / (1024**3)
+    DOWNLOAD = NET.bytes_recv / (1024**3)
+
+    return UPLOAD, DOWNLOAD
+
+while True:
+
+    os.system("clear")
+    
+    UPLOAD, DOWNLOAD = getNetwork()
+
+    SECONDS, MINUTES, HOURS = getUptime()
+
+    # 1024**3 von Bytes auf GB
+    RAM_FREE, RAM_TOTAL, RAM_USED = getRAM()
+    
+
+    CPU_USAGE = psutil.cpu_percent()
+
+    DISK_FREE,DISK_PERCENT, DISK_TOTAL, DISK_USAGE = getDisk()
+
 
     # Using :. for formating Numbers
     print("#### RAM-Infomation ###\n")
