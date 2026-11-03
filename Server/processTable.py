@@ -39,11 +39,11 @@ def sendReport():
             RUNNING_TIME, RUNNING_UNIT = getUptime(p)
             
             RAM_USAGE, einheit = getRamUsage(p)
-            
+
             print(f"{p.info['pid']:<8} | {p.info['name']:<25} | {RAM_USAGE:<10.2f} {einheit} | {CPU_USAGE:<10} | {RUNNING_TIME:<10.1f} {RUNNING_UNIT}")
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
-        
+
 def getCpuUsage(p):
     CPU_USAGE = round(p.cpu_percent(interval=0.5), 2)
     CPU_USAGE_TEXT = str(CPU_USAGE) + "%"
@@ -100,5 +100,6 @@ def getUptime(p):
         RUNNING_UNIT = "hrs"
     return RUNNING_TIME, RUNNING_UNIT
 
+sendReport()
 
 

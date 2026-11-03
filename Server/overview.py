@@ -106,4 +106,3 @@ def main():
         
         RefreshCount += 1
         
-main()
