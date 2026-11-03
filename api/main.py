@@ -48,3 +48,4 @@ def monitor():
         "upload_speed": f"{UPLOAD_SPEED:.2f}",
         "download_speed": f"{DOWNLOAD_SPEED:.2f}"
     }
+
