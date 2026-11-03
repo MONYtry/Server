@@ -24,15 +24,14 @@ async function setValues(data) {
         return;
 
     // RAM
-    document.getElementById("ram_free").textContent = `RAM Free: ${data.ram_free}GB`;
-    document.getElementById("ram_total").textContent = `RAM Total: ${data.ram_total}GB`;
-    document.getElementById("ram_used").textContent = `RAM Used: ${data.ram_used}GB`;
+    document.getElementById("ram_free").textContent = `RAM: ${data.ram_used}GB used of ${data.ram_total}GB`;
+    document.getElementById("ram_used").textContent = `${data.ram_free}GB Free · ${data.ram_used} GB Used`;
 
     // DISK
-    document.getElementById("disk_free").textContent = `Disk Free: ${data.disk_free} GB`;
-    document.getElementById("disk_percent").textContent = `Disk Percent: ${data.disk_percent}%`;
-    document.getElementById("disk_total").textContent = `Disk Total: ${data.disk_total}GB`;
-    document.getElementById("disk_usage").textContent = `Disk Usage: ${data.disk_usage}GB`;
+    const remainingPercent = ((data.disk_free / data.disk_total) * 100).toFixed(2);
+    document.getElementById("disk_free").textContent = `Storage: ${data.disk_usage}GB used of ${data.disk_total}GB`;
+    document.getElementById("disk_percent").textContent = `${remainingPercent}% Available`;
+    document.getElementById("disk_usage").textContent = `${data.disk_free} GB Free · ${data.disk_usage} GB Used`;
 
     // UPTIME
     document.getElementById("uptime").textContent = `Uptime Seconds: ${data.uptime}`;
@@ -43,3 +42,4 @@ async function setValues(data) {
 }
 
 getData();
+setInterval(getData(), 5000);
