@@ -2,10 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
+from requests import get
 from Server.overview import getDisk, getNetwork,getRAM,getUptime
-load_dotenv()
+import socket
 import psutil
 
+load_dotenv()
 BACKEND_URL = os.getenv("BACKEND_URL")
 FRONTEND_URL = os.getenv("FRONTEND_URL")
 
@@ -18,6 +20,16 @@ app.add_middleware(CORSMiddleware,
                    allow_methods=["*"],
                    allow_headers=["*"],
                    allow_credentials=True)
+
+
+def getPrivateIP():
+    hostname = socket.gethostname()
+    IPAddr = socket.gethostbyname(hostname)
+    return IPAddr
+
+def getPublicIP():
+    target_ip = get('https://api.ipify.org').text
+    return target_ip
 
 @app.get("/")
 def home():
@@ -46,6 +58,8 @@ def monitor():
         "disk_usage": f"{DISK_USAGE:.2f}",
         "uptime": f"{HOURS}h {MINUTES}min {SECONDS}s",
         "upload_speed": f"{UPLOAD_SPEED:.2f}",
-        "download_speed": f"{DOWNLOAD_SPEED:.2f}"
+        "download_speed": f"{DOWNLOAD_SPEED:.2f}",
+        "private_ip": f"{getPrivateIP()}",
+        "public_ip": f"{getPublicIP()}"
     }
 

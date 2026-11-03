@@ -58,6 +58,7 @@ def getNetwork(old_net, refresh_time):
 old_net = psutil.net_io_counters()
 
 def main():
+    global old_net, RefreshCount
     while True:
 
         os.system("clear")
@@ -105,3 +106,4 @@ def main():
         
         RefreshCount += 1
         
+main()
