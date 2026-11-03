@@ -55,6 +55,10 @@ def getNetwork(old_net, refresh_time):
     
     return NET, UPLOAD_SPEED, DOWNLOAD_SPEED
 
+def getCPU():
+    CPU_USAGE = psutil.cpu_percent()
+    return CPU_USAGE
+
 old_net = psutil.net_io_counters()
 
 def main():
@@ -70,8 +74,8 @@ def main():
         # 1024**3 von Bytes auf GB
         RAM_FREE, RAM_TOTAL, RAM_USED = getRAM()
         
-
-        CPU_USAGE = psutil.cpu_percent()
+        CPU_USAGE = getCPU()
+        
 
         DISK_FREE,DISK_PERCENT, DISK_TOTAL, DISK_USAGE = getDisk()
 

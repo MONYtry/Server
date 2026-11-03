@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
 from requests import get
-from Server.overview import getDisk, getNetwork,getRAM,getUptime
+from config import Small_RAM_Usage,Medium_RAM_Usage,High_RAM_Usage,Critical_RAM_Usage
+from Server.overview import getDisk, getNetwork,getRAM,getUptime,getCPU
 import socket
 import psutil
 
@@ -41,6 +42,15 @@ def home():
 
 old_net = psutil.net_io_counters()
 
+@app.get("/config")
+def getConfig():
+    return {
+        "small_ram_usage": f"{Small_RAM_Usage:.2f}",
+        "medium_ram_usage": f"{Medium_RAM_Usage:.2f}",
+        "high_ram_usage": f"{High_RAM_Usage:.2f}",
+        "critical_ram_usage": f"{Critical_RAM_Usage:.2f}"
+    }
+
 @app.get("/monitor")
 def monitor():
     RAM_FREE, RAM_TOTAL, RAM_USED = getRAM()
@@ -60,6 +70,7 @@ def monitor():
         "upload_speed": f"{UPLOAD_SPEED:.2f}",
         "download_speed": f"{DOWNLOAD_SPEED:.2f}",
         "private_ip": f"{getPrivateIP()}",
-        "public_ip": f"{getPublicIP()}"
+        "public_ip": f"{getPublicIP()}",
+        "cpu_usage": f"{getCPU()}"
     }
 

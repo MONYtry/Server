@@ -29,7 +29,9 @@ footer {
 h2 {
     margin-bottom: 10px;
 }
-
+.report{
+    background-color: green;
+}
 .card{
     background-color: #151f32;
     border: 1px solid #263650;
