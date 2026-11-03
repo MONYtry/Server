@@ -37,14 +37,14 @@ def monitor():
     NET, UPLOAD_SPEED, DOWNLOAD_SPEED = getNetwork(old_net,5)
 
     return {
-        "ram_free": RAM_FREE,
-        "ram_total": RAM_TOTAL,
-        "ram_used": RAM_USED,
-        "disk_free": DISK_FREE,
-        "disk_percent": DISK_PERCENT,
-        "disk_total": DISK_TOTAL,
-        "disk_usage": DISK_USAGE,
-        "uptime": str(HOURS) + "h " + str(MINUTES) + "min " + str(SECONDS) + "s",
-        "upload_speed": UPLOAD_SPEED,
-        "download_speed": DOWNLOAD_SPEED
-            }
+        "ram_free": f"{RAM_FREE:.2f}",
+        "ram_total": f"{RAM_TOTAL:.2f}",
+        "ram_used": f"{RAM_USED:.2f}",
+        "disk_free": f"{DISK_FREE:.2f}",
+        "disk_percent": f"{DISK_PERCENT:.2f}",
+        "disk_total": f"{DISK_TOTAL:.2f}",
+        "disk_usage": f"{DISK_USAGE:.2f}",
+        "uptime": f"{HOURS}h {MINUTES}min {SECONDS}s",
+        "upload_speed": f"{UPLOAD_SPEED:.2f}",
+        "download_speed": f"{DOWNLOAD_SPEED:.2f}"
+    }

@@ -23,22 +23,22 @@ async function setValues(data) {
         return;
 
     // RAM
-    document.getElementById("ram_free").textContent = `RAM Free: ${data.ram_free}`;
-    document.getElementById("ram_total").textContent = `RAM Total: ${data.ram_total}`;
-    document.getElementById("ram_used").textContent = `RAM Used: ${data.ram_used}`;
+    document.getElementById("ram_free").textContent = `RAM Free: ${data.ram_free}GB`;
+    document.getElementById("ram_total").textContent = `RAM Total: ${data.ram_total}GB`;
+    document.getElementById("ram_used").textContent = `RAM Used: ${data.ram_used}GB`;
 
     // DISK
-    document.getElementById("disk_free").textContent = `Disk Free: ${data.disk_free}`;
-    document.getElementById("disk_percent").textContent = `Disk Percent: ${data.disk_percent}`;
-    document.getElementById("disk_total").textContent = `Disk Total: ${data.disk_total}`;
-    document.getElementById("disk_usage").textContent = `Disk Usage: ${data.disk_usage}`;
+    document.getElementById("disk_free").textContent = `Disk Free: ${data.disk_free} GB`;
+    document.getElementById("disk_percent").textContent = `Disk Percent: ${data.disk_percent}%`;
+    document.getElementById("disk_total").textContent = `Disk Total: ${data.disk_total}GB`;
+    document.getElementById("disk_usage").textContent = `Disk Usage: ${data.disk_usage}GB`;
 
     // UPTIME
     document.getElementById("uptime").textContent = `Uptime Seconds: ${data.uptime}`;
 
     // NETWORK
-    document.getElementById("upload_speed").textContent = `Upload Speed: ${data.upload_speed}`;
-    document.getElementById("download_speed").textContent = `Download Speed: ${data.download_speed}`;
+    document.getElementById("upload_speed").textContent = `Upload Speed: ${data.upload_speed}MB/s`;
+    document.getElementById("download_speed").textContent = `Download Speed: ${data.download_speed}MB/s`;
 }
 
 getData();
