@@ -19,6 +19,7 @@ async function getData() {
 }
 
 async function setValues(data) {
+    
     if (data == null)
         return;
 

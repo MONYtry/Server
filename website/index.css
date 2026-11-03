@@ -1,0 +1,30 @@
+
+/* Modern Dark Blue Dashboard */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0b1120;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 35px;
+}
+
+
+.card{
+    background-color: #151f32;
+    border: 1px solid #263650;
+    padding: 20px;
+    line-height: 1.25;
+}
+
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    align-items: center;
+}

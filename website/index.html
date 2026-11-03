@@ -1,22 +1,39 @@
+<head>
+    <link rel="stylesheet" href="index.css">
+</head>
+
 <body>
     <p>Hello world</p>
+    <div class="card-list">
+        <div class="card">
+            <!-- RAM -->
+            <p id="ram_free">RAM Free: </p>
+            <p id="ram_total">RAM Total: </p>
+            <p id="ram_used">RAM Used: </p>
+        </div>
 
-    <!-- RAM -->
-    <p id="ram_free">RAM Free: </p>
-    <p id="ram_total">RAM Total: </p>
-    <p id="ram_used">RAM Used: </p>
+        <div class="card">
+            <!-- DISK -->
+            <p id="disk_free">Disk Free: </p>
+            <p id="disk_percent">Disk Percent: </p>
+            <p id="disk_total">Disk Total: </p>
+            <p id="disk_usage">Disk Usage: </p>
+        </div>
+        
+        <div class="card">
+            <!-- UPTIME -->
+            <p id="uptime">Uptime Seconds: </p>
+        </div>
+        
+        <div class="card">
+        <!-- NETWORK -->
+        <p id="upload_speed">Upload Speed: </p>
+        <p id="download_speed">Download Speed: </p>
+        </div>
+    </div>
 
-    <!-- DISK -->
-    <p id="disk_free">Disk Free: </p>
-    <p id="disk_percent">Disk Percent: </p>
-    <p id="disk_total">Disk Total: </p>
-    <p id="disk_usage">Disk Usage: </p>
 
-    <!-- UPTIME -->
-    <p id="uptime">Uptime Seconds: </p>
 
-    <!-- NETWORK -->
-    <p id="upload_speed">Upload Speed: </p>
-    <p id="download_speed">Download Speed: </p>
     <script src="index.js"></script>
+    
 </body>
