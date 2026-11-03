@@ -57,50 +57,51 @@ def getNetwork(old_net, refresh_time):
 
 old_net = psutil.net_io_counters()
 
-while True:
+def main():
+    while True:
 
-    os.system("clear")
-    
-    old_net, UPLOAD, DOWNLOAD = getNetwork(old_net, RefreshTime)
+        os.system("clear")
+        
+        old_net, UPLOAD, DOWNLOAD = getNetwork(old_net, RefreshTime)
 
-    SECONDS, MINUTES, HOURS = getUptime()
+        SECONDS, MINUTES, HOURS = getUptime()
 
-    # 1024**3 von Bytes auf GB
-    RAM_FREE, RAM_TOTAL, RAM_USED = getRAM()
-    
+        # 1024**3 von Bytes auf GB
+        RAM_FREE, RAM_TOTAL, RAM_USED = getRAM()
+        
 
-    CPU_USAGE = psutil.cpu_percent()
+        CPU_USAGE = psutil.cpu_percent()
 
-    DISK_FREE,DISK_PERCENT, DISK_TOTAL, DISK_USAGE = getDisk()
+        DISK_FREE,DISK_PERCENT, DISK_TOTAL, DISK_USAGE = getDisk()
 
 
-    # Using :. for formating Numbers
-    print("#### RAM-Infomation ###\n")
-    print(f"Gesamter Ram: {RAM_TOTAL:.1f} GB")
-    print(f"Genutzer Ram: {RAM_USED:.1f} GB")
-    print(f"Freier Ram: {RAM_FREE:.1f} GB \n")
+        # Using :. for formating Numbers
+        print("#### RAM-Infomation ###\n")
+        print(f"Gesamter Ram: {RAM_TOTAL:.1f} GB")
+        print(f"Genutzer Ram: {RAM_USED:.1f} GB")
+        print(f"Freier Ram: {RAM_FREE:.1f} GB \n")
 
-    print("#### CPU-Infomation ###\n")
-    print(f"CPU Usage: {CPU_USAGE}% \n")
+        print("#### CPU-Infomation ###\n")
+        print(f"CPU Usage: {CPU_USAGE}% \n")
 
-    print("#### DISC-Infomation ###\n")
-    print(f"Disk-Usage: {DISK_USAGE:.1f}")
-    print(f"Disk-Free: {DISK_FREE:.1f}")
-    print(f"Disk-total: {DISK_TOTAL:.1f}")
-    print(f"Disk-Percent: {DISK_PERCENT:.1f}%\n")
+        print("#### DISC-Infomation ###\n")
+        print(f"Disk-Usage: {DISK_USAGE:.1f}")
+        print(f"Disk-Free: {DISK_FREE:.1f}")
+        print(f"Disk-total: {DISK_TOTAL:.1f}")
+        print(f"Disk-Percent: {DISK_PERCENT:.1f}%\n")
 
-    print("#### NETWORK-Infomation ###\n")
-    print(f"Upload: {UPLOAD:.2f} MB/s")
-    print(f"Download: {DOWNLOAD:.2f} MB/s")
-    
+        print("#### NETWORK-Infomation ###\n")
+        print(f"Upload: {UPLOAD:.2f} MB/s")
+        print(f"Download: {DOWNLOAD:.2f} MB/s")
+        
 
-    print("#### Infomation ###\n")
-    print(f"Server Uptime: {HOURS}h {MINUTES}m {SECONDS}s")
-    print(f"Nächste aktualiserung in {RefreshTime}...")
-    print(f"Aktuelle aktualiserung [#{RefreshCount}]")
-    print("Press [CTRL + C] to quit...")
+        print("#### Infomation ###\n")
+        print(f"Server Uptime: {HOURS}h {MINUTES}m {SECONDS}s")
+        print(f"Nächste aktualiserung in {RefreshTime}...")
+        print(f"Aktuelle aktualiserung [#{RefreshCount}]")
+        print("Press [CTRL + C] to quit...")
 
-    time.sleep(RefreshTime)
-    
-    RefreshCount += 1
-    
+        time.sleep(RefreshTime)
+        
+        RefreshCount += 1
+        
