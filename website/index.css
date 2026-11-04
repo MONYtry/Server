@@ -30,42 +30,136 @@ h2 {
     margin-bottom: 10px;
 }
 .report{
-    background-color: green;
-}
-
-.card{
     background-color: #151f32;
     border: 1px solid #263650;
+    border-radius: 12px;
     padding: 20px;
-    line-height: 1.25;
+    line-height: 1.4;
+
+    width: 25%;
+
+}
+
+.card {
+    background-color: #151f32;
+    border: 1px solid #263650;
+    border-radius: 12px;
+
+    padding: 20px;
+    line-height: 1.4;
+
+    width: 100%;
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
 
     transition: 0.2s ease;
 }
 
-.card:hover{
-    transform: scale(1.02);
-    border: 1px solid #3d5b8b;
-    box-shadow: 0px 5px 50px -7px #3f257b;
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #3d5b8b;
+    box-shadow: 0px 5px 30px -7px #3f257b;
 }
 
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #3d5b8b;
+    box-shadow: 0px 5px 30px -7px #3f257b;
+}
 .card-list {
+    margin-top: 2%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 15px;
+
+    align-items: stretch;
+    grid-auto-rows: 1fr;
+}
+
+.card-critical {
+    background-color: #211f26;
+    border: 1px solid #713737;
+    box-shadow: 0 0 12px rgba(239, 83, 80, 0.12);
+    transition: all 0.3s ease;
+}
+
+.card-warning {
+    background-color: #24231f;
+    border: 1px solid #70552d;
+}
+
+.card-normal {
+    background-color: #202938;
+    border: 1px solid #354154;
+}
+
+.title {
+    width: 100%;
+    min-height: 130px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    
+    background: linear-gradient(120deg,
+            #071a35,
+            #0b2850,
+            #102f59);
+
+    border: 1px solid #1e416d;
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.title-text h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #f1f5f9;
+    letter-spacing: -0.8px;
+    margin-bottom: 8px;
+}
+
+.title-text p {
+    font-size: 15px;
+    color: #94b4dc;
+}
+
+.title-icons {
+    display: flex;
     align-items: center;
 }
 
-.title{
-    margin-bottom: 10px;
-    background-color: #042c60;
-    max-width: 40%;
-    border-radius: 10px;
-    padding: 10px;
-
+.title-icons img {
+    height: 45px;
+    width: auto;
+    opacity: 0.9;
     transition: 0.2s ease;
 }
 
-.title:hover{
+.title-icons img:hover {
+    opacity: 1;
     transform: scale(1.05);
-    background-color: #05326e;
+}
+
+
+.progress {
+    width: 300px;
+    height: 25px;
+    background: #333;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#bar {
+    width: 0%;
+    height: 100%;
+    background: limegreen;
+    transition: width 0.1s;
 }

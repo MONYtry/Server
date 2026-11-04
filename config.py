@@ -1,7 +1,7 @@
-Small_RAM_Usage = 2
-Medium_RAM_Usage = 4
-High_RAM_Usage = 10
-Critical_RAM_Usage = 12
+Small_RAM_Usage = 20
+Medium_RAM_Usage = 40
+High_RAM_Usage = 100
+Critical_RAM_Usage = 1
 
 
 Small_CPU_Usage = 5

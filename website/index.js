@@ -12,10 +12,20 @@ async function getData() {
         console.log(result);
         setValues(result);
         await handleErrors(result);
+        displayBar(result.cpu_usage,"bar","text_id");
     }
     catch (error) 
     {
         console.error("Fetch-Fehler:", error);
+        const div = document.getElementById("warnings");
+        // Alte Warnungen entfernen
+        div.replaceChildren();
+
+        div.className = "report";
+    
+        div.textContent = "Server offline 🔴";
+        div.style.color = "red";
+
     }
 }
 
@@ -85,7 +95,7 @@ async function handleErrors(data) {
     // Alte Warnungen entfernen
     div.replaceChildren();
 
-    div.className = "card";
+    div.className = "report";
 
     if (data == null) {
         div.textContent = "Server offline 🔴";
@@ -99,21 +109,47 @@ async function handleErrors(data) {
 
     let messages = [];
 
+    const cpu = document.getElementById("cpu_usage");
+    const RAM = document.getElementById("ram_used");
+    
     // CPU
     if (data.cpu_usage >= 95)
+    {
         messages.push("🔴 CPU kritisch ausgelastet!");
+        cpu.style.color = "red";
+    }
+
     else if (data.cpu_usage >= 80)
+    {
         messages.push("🟠 CPU stark ausgelastet!");
+        cpu.style.color = "orange";
+    }
+
     else if (data.cpu_usage >= 60)
+    {
         messages.push("🟡 CPU-Auslastung erhöht!");
+        cpu.style.color = "yellow";
+    }
 
     // RAM
     if (data.ram_used > result.critical_ram_usage)
+    {
         messages.push("🔴 RAM kritisch ausgelastet!");
+        RAM.style.color = "red";
+        RAM.parentElement.classList.add("card-critical");
+    }
+
     else if (data.ram_used > result.high_ram_usage)
+    {
         messages.push("🟠 RAM stark ausgelastet!");
+        RAM.style.color = "orange"
+    }
+
     else if (data.ram_used > result.medium_ram_usage)
+    { 
         messages.push("🟡 RAM-Auslastung erhöht!");
+        RAM.style.color = "yellow"
+    }
 
     if (messages.length > 0) {
         const title = document.createElement("h2");
@@ -142,6 +178,19 @@ async function handleErrors(data) {
         div.style.color = "green";
         div.textContent = "Keine Warnungen 🟢";
     }
+}
+
+
+function displayBar(dataToCheck, bar_id, text_id) {
+    if (dataToCheck || bar_id || text_id == null)
+    {
+        console.log("Fehler bei der Übergabe der Werte, bitte überprüfe diese!");
+        return;
+    }
+    let progress = dataToCheck;
+
+    document.getElementById(bar_id).style.width = progress + "%";
+    document.getElementById(text_id).textContent = progress + "%";
 }
 
 getData();

@@ -5,10 +5,16 @@
 
 <body>
     <div class="title">
-        <h1>Managment Portal</h1>
-        <p>Ubuntu-Homeserver</p>
-    </div>
+        <div class="title-text">
+            <h1>Management Portal</h1>
+            <p>Ubuntu-Homeserver · Systemverwaltung</p>
+        </div>
 
+        <div class="title-icons">
+            <img src="https://skillicons.dev/icons?i=linux,ubuntu,py" alt="Technologien">
+        </div>
+    </div>
+    <div id="warnings"></div>
     <div class="card-list">
         <div class="card">
             <h2>RAM</h2>
@@ -51,8 +57,10 @@
         </div>
     </div>
 
-    <div id="warnings"></div>
-
+    <div class="progress">
+        <div id="bar"></div>
+    </div>
+    
     <script src="index.js"></script>
 </body>
 
