@@ -14,17 +14,26 @@
             <img src="https://skillicons.dev/icons?i=linux,ubuntu,py" alt="Technologien">
         </div>
     </div>
-    <div id="warnings"></div>
+    
+    
     <div class="card-list">
         <div class="card">
             <h2>RAM</h2>
             <p id="ram_free">RAM Free: </p>
             <p id="ram_used">RAM Used: </p>
+
+            <div class="progress">
+                <div id="bar_ram"  class="progress-bar green"></div>
+            </div>
         </div>
 
         <div class="card">
             <h2>CPU</h2>
             <p id="cpu_usage">CPU usage:.... </p>
+            
+            <div class="progress">
+                <div id="bar_cpu" class="progress-bar green"></div>
+            </div>
         </div>
 
         <div class="card report">
@@ -38,6 +47,10 @@
             <p id="disk_free">Disk Free: </p>
             <p id="disk_percent">Disk Percent: </p>
             <p id="disk_usage">Disk Usage: </p>
+
+            <div class="progress">
+                <div id="bar_disk"  class="progress-bar green"></div>
+            </div>
         </div>
         
         <div class="card">
@@ -55,10 +68,6 @@
             <p id="public_ip">Loading...</p>
 
         </div>
-    </div>
-
-    <div class="progress">
-        <div id="bar"></div>
     </div>
     
     <script src="index.js"></script>

@@ -2,17 +2,22 @@ const monitor = "/monitor";
 const config = "/config";
 const apiBase = "http://127.0.0.1:8000";
 
+
+let messages = [];
+
 async function getData() {
     try 
     {
         const response = await fetch(apiBase + monitor);
 
         const result = await response.json();
+        
+        messages = [];
 
         console.log(result);
         setValues(result);
-        await handleErrors(result);
-        displayBar(result.cpu_usage,"bar","text_id");
+
+        displayBar(result.cpu_usage,"bar_cpu", "cpu");
     }
     catch (error) 
     {
@@ -41,14 +46,21 @@ async function setValues(data) {
 
     if (data == null)
         return;
+    
     // RAM
+    const usedPercentRam = ((data.ram_used / data.ram_total) * 100).toFixed(2);
+    displayBar(usedPercentRam, "bar_ram","ram");
+
+
     document.getElementById("ram_free").textContent = `RAM: ${data.ram_used}GB used of ${data.ram_total}GB`;
     document.getElementById("ram_used").textContent = `${data.ram_free}GB Free - ${data.ram_used} GB Used`;
 
     // DISK
-    const remainingPercent = ((data.disk_free / data.disk_total) * 100).toFixed(2);
+    const usedPercentDisk =((data.disk_usage / data.disk_total) * 100).toFixed(2);    
+    displayBar(usedPercentDisk, "bar_disk", "disk");
+    
     document.getElementById("disk_free").textContent = `Storage: ${data.disk_usage}GB used of ${data.disk_total}GB`;
-    document.getElementById("disk_percent").textContent = `${remainingPercent}% Available`;
+    document.getElementById("disk_percent").textContent = `${usedPercentDisk}% Used`;
     document.getElementById("disk_usage").textContent = `${data.disk_free} GB Free - ${data.disk_usage} GB Used`;
     
     // UPTIME
@@ -81,117 +93,53 @@ async function getConfig() {
     }
 }
 
-function setDesign(id,text,color)
-{
-    const element = document.getElementById(id);
-
-    element.style.color = color;
-    element.textContent = text;
-}
-
-async function handleErrors(data) {
-    const div = document.getElementById("warnings");
-
-    // Alte Warnungen entfernen
-    div.replaceChildren();
-
-    div.className = "report";
-
-    if (data == null) {
-        div.textContent = "Server offline 🔴";
-        div.style.color = "red";
-        return;
-    }
-
-    const result = await getConfig();
-
-    if (!result) return;
-
-    let messages = [];
-
-    const cpu = document.getElementById("cpu_usage");
-    const RAM = document.getElementById("ram_used");
-    
-    // CPU
-    if (data.cpu_usage >= 95)
-    {
-        messages.push("🔴 CPU kritisch ausgelastet!");
-        cpu.style.color = "red";
-    }
-
-    else if (data.cpu_usage >= 80)
-    {
-        messages.push("🟠 CPU stark ausgelastet!");
-        cpu.style.color = "orange";
-    }
-
-    else if (data.cpu_usage >= 60)
-    {
-        messages.push("🟡 CPU-Auslastung erhöht!");
-        cpu.style.color = "yellow";
-    }
-
-    // RAM
-    if (data.ram_used > result.critical_ram_usage)
-    {
-        messages.push("🔴 RAM kritisch ausgelastet!");
-        RAM.style.color = "red";
-        RAM.parentElement.classList.add("card-critical");
-    }
-
-    else if (data.ram_used > result.high_ram_usage)
-    {
-        messages.push("🟠 RAM stark ausgelastet!");
-        RAM.style.color = "orange"
-    }
-
-    else if (data.ram_used > result.medium_ram_usage)
-    { 
-        messages.push("🟡 RAM-Auslastung erhöht!");
-        RAM.style.color = "yellow"
-    }
-
-    if (messages.length > 0) {
-        const title = document.createElement("h2");
-        title.textContent = "Warnungen vorhanden";
-        title.style.color = "red";
-        div.appendChild(title);
 
 
-        for (const message of messages) {
-            const p = document.createElement("p");
-            p.textContent = message;
-            // Farbe anhand der Warnung bestimmen
-            if (message.includes("🔴")) {
-                p.style.color = "red";
-            }
-            else if (message.includes("🟠")) {
-                p.style.color = "orange";
-            }
-            else if (message.includes("🟡")) {
-                p.style.color = "gold";
-            }
-            div.appendChild(p);
-        }
-    }
-    else {
-        div.style.color = "green";
-        div.textContent = "Keine Warnungen 🟢";
-    }
-}
 
-
-function displayBar(dataToCheck, bar_id, text_id) {
-    if (dataToCheck || bar_id || text_id == null)
+function displayBar(dataToCheck, bar_id, type) {
+    // Null-Reference Handler
+    if (dataToCheck == null || bar_id == null)
     {
         console.log("Fehler bei der Übergabe der Werte, bitte überprüfe diese!");
         return;
     }
-    let progress = dataToCheck;
 
-    document.getElementById(bar_id).style.width = progress + "%";
-    document.getElementById(text_id).textContent = progress + "%";
+    // Holt sich das Bar-Element
+    const bar = document.getElementById(bar_id);
+    if (!bar) return;
+    
+    // Entfernt alte Classes
+    bar.classList.remove("green", "yellow", "red");
+    
+    // Holt sich das Parent-Element
+    const parent = bar.parentElement;
+    
+    // Alles hier ist in %-Angaben
+    if (dataToCheck <= 20)
+    {
+        bar.classList.add("green");
+        parent.parentElement.classList.add("card-normal");
+        messages.push({component: type, status: "normal", value: dataToCheck });
+    }
+
+    else if (dataToCheck <= 40)
+    {
+        bar.classList.add("yellow");
+        parent.parentElement.classList.add("card-warning");
+        messages.push({ component: type, status: "warning", value: dataToCheck });
+    }
+    else
+    {
+        bar.classList.add("red");
+        parent.parentElement.classList.add("card-critical");
+        messages.push({ component: type, status: "critical", value: dataToCheck });
+    }
+
+    let progress = dataToCheck;
+    bar.style.width = progress + "%";
 }
+
+
 
 getData();
 setInterval(getData, 5000);
