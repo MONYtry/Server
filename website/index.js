@@ -11,7 +11,7 @@ async function getData() {
 
         console.log(result);
         setValues(result);
-        handleErrors(result);
+        await handleErrors(result);
     }
     catch (error) 
     {
@@ -79,20 +79,26 @@ function setDesign(id,text,color)
     element.textContent = text;
 }
 
-async function handleErrors(data)
-{
-    if (data == null)
-    {
-        setDesign("warnings", "Server offline 🔴","red")
+async function handleErrors(data) {
+    const div = document.getElementById("warnings");
+
+    // Alte Warnungen entfernen
+    div.replaceChildren();
+
+    div.className = "card";
+
+    if (data == null) {
+        div.textContent = "Server offline 🔴";
+        div.style.color = "red";
         return;
     }
-    
+
     const result = await getConfig();
-    
+
     if (!result) return;
-    
+
     let messages = [];
-    
+
     // CPU
     if (data.cpu_usage >= 95)
         messages.push("🔴 CPU kritisch ausgelastet!");
@@ -108,10 +114,35 @@ async function handleErrors(data)
         messages.push("🟠 RAM stark ausgelastet!");
     else if (data.ram_used > result.medium_ram_usage)
         messages.push("🟡 RAM-Auslastung erhöht!");
-    if (messages.length > 0)
-    {
-        setDesign("warnings",messages,"green");
+
+    if (messages.length > 0) {
+        const title = document.createElement("h2");
+        title.textContent = "Warnungen vorhanden";
+        title.style.color = "red";
+        div.appendChild(title);
+
+
+        for (const message of messages) {
+            const p = document.createElement("p");
+            p.textContent = message;
+            // Farbe anhand der Warnung bestimmen
+            if (message.includes("🔴")) {
+                p.style.color = "red";
+            }
+            else if (message.includes("🟠")) {
+                p.style.color = "orange";
+            }
+            else if (message.includes("🟡")) {
+                p.style.color = "gold";
+            }
+            div.appendChild(p);
+        }
+    }
+    else {
+        div.style.color = "green";
+        div.textContent = "Keine Warnungen 🟢";
     }
 }
+
 getData();
 setInterval(getData, 5000);
