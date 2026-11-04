@@ -31,6 +31,7 @@ async function getData() {
         div.textContent = "Server offline 🔴";
         div.style.color = "red";
 
+        notLoaded();
     }
 }
 
@@ -139,7 +140,28 @@ function displayBar(dataToCheck, bar_id, type) {
     bar.style.width = progress + "%";
 }
 
+function notLoaded()
+{
+    document.getElementById("ram_free").textContent = `...`;
+    document.getElementById("ram_used").textContent = `...`;
 
+
+    document.getElementById("disk_free").textContent = `...`;
+    document.getElementById("disk_percent").textContent = `...`;
+    document.getElementById("disk_usage").textContent = `...`;
+
+    // UPTIME
+    document.getElementById("uptime").textContent = `...`;
+
+    // NETWORK
+    document.getElementById("upload_speed").textContent = `...`;
+    document.getElementById("download_speed").textContent = `...`;
+    document.getElementById("private_ip").textContent = `...`;
+    document.getElementById("public_ip").textContent = `...`;
+
+    // CPU
+    document.getElementById("cpu_usage").textContent = `...`;
+}
 
 getData();
 setInterval(getData, 5000);
